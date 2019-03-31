@@ -56,11 +56,11 @@ class NotesController extends Controller
     public function update(NoteUpdatedRequest $request, Note $note)
     {
         $note->update([
-          "title" => $request->input('title') || $note->title,
-          "content" => $request->input('content') || $note->content
+          "title" => ($request->filled('title')) ? $request->input('title') : $note->title,
+          "content" => ($request->filled('content')) ? $request->input('content') : $note->content
         ]);
 
-        response()->json([ "data" => $note ]);
+        return response()->json([ "data" => $note ]);
     }
 
     /**
